@@ -2,7 +2,7 @@
 
 require File.expand_path('../lib/eb_deployer/version', __FILE__)
 
-lGem::Specification.new do |gem|
+Gem::Specification.new do |gem|
   gem.authors       = ['wpc', 'betarelease', 'xli']
   gem.email         = ['alex.hal9000@gmail.com', 'sudhindra.r.rao@gmail.com', 'swing1979@gmail.com']
   gem.description   = %q{For automating Blue-Green deployment flows on Elastic Beanstalk.}
