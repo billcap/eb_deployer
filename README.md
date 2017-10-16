@@ -6,6 +6,35 @@ Low friction deployments should be a breeze. Elastic Beanstalk provides a great 
 
 [Deploy Service by EbDeployer](http://www.thoughtworks.com/mingle/infrastructure/2015/06/01/deploy-service-by-ebdeployer.html)
 
+## Deployment
+
+Give yourself access to gemfury by following the _Storing credentials with .netrc and Gemfury CLI_ guide at [Gemfury - Securely accessing your account](https://gemfury.com/help/git-push-package/#credentials).
+
+```
+git remote add fury https://rib-deploy@git.fury.io/billcap/eb_deployer.git
+git push fury master
+```
+
+## Adding to your environment
+
+In your Gemfile, add the following source directive before the reference to `gemspec`:
+
+```
+source "https://gem.fury.io/billcap/"
+```
+
+(as documented in [Gemfury - Install RubyGems with a Gemfile (Bundler 1.7+)[https://gemfury.com/help/install-gems#gemfile] and [Keeping your privates private (Bundler 1.8+)[https://gemfury.com/help/install-gems#keep-your-privates-private-bundler-1-8])
+
+## Building on CircleCI
+
+Add the following as a build step in CircleCI:
+
+```
+bundle config gem.fury.io $GEMFURY_TOKEN
+```
+
+Also, add the GEMFURY_TOKEN environment variable in CircleCI, using the value specified as the _API token_ under the [Account settings for the Billcap account in Gemfury](https://manage.fury.io/manage/billcap/settings).
+
 ## Installation
 
     $ gem install eb_deployer
