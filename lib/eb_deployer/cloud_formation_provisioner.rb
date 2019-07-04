@@ -12,7 +12,7 @@ module EbDeployer
       @poller = EventPoller.new(CfEventSource.new(@stack_name, @cf_driver))
     end
 
-    def provision(resources, tags = nil)
+    def provision(resources, tags)
       resources = symbolize_keys(resources)
       template = File.read(resources[:template])
       capabilities = resources[:capabilities] || []
@@ -68,7 +68,7 @@ module EbDeployer
     end
 
     def update_stack(template, params, capabilities, policy, override_policy, tags)
-      opts = {:capabilities => capabilities, :parameters => params}
+      opts = {:capabilities => capabilities, :parameters => params, :tags => tags}
       if (policy)
         opts[:stack_policy_during_update_body] = policy if override_policy
         log("Using temporary stack policy to apply resource stack updates") if override_policy
