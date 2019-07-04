@@ -3,7 +3,9 @@ require 'set'
 require 'time'
 require 'json'
 require 'timeout'
-require 'aws-sdk'
+require 'aws-sdk-s3'
+require 'aws-sdk-elasticbeanstalk'
+require 'aws-sdk-cloudformation'
 require 'optparse'
 require 'erb'
 require 'fileutils'
@@ -316,7 +318,6 @@ module EbDeployer
 
       opts.on("--debug", "Output AWS debug log") do |d|
         require 'logger'
-        require 'aws-sdk'
         logger = Logger.new($stdout)
         logger.level = Logger::DEBUG
         Aws.config.update(:logger => logger)

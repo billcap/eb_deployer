@@ -1,0 +1,38 @@
+defaults: &defaults
+  working_directory: /home/circleci/eb_deployer
+  docker:
+    - image: circleci/ruby:2.5
+version: 2
+database:
+  override:
+    - echo 'no db needed for tests'
+jobs:
+  test:
+    working_directory: /home/circleci/eb_deployer
+    docker:
+      - image: circleci/ruby:2.5
+
+    steps:
+      - checkout
+      # Restore bundle cache
+      - type: cache-restore
+        key: eb_deployer-test-{{ checksum "Gemfile.lock" }}
+
+      # Bundle install dependencies
+      - run: bundle install --path vendor/bundle
+
+      # Store bundle cache
+      - type: cache-save
+        key: eb_deployer-test-{{ checksum "Gemfile.lock" }}
+        paths:
+          - vendor/bundle
+
+      - type: shell
+        command: |
+          bundle exec rake
+
+workflows:
+  version: 2
+  test-and-deploy:
+    jobs:
+      - test
