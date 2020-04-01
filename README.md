@@ -8,38 +8,28 @@ Low friction deployments should be a breeze. Elastic Beanstalk provides a great 
 
 ## Deployment
 
-Give yourself access to gemfury by following the _Storing credentials with .netrc and Gemfury CLI_ guide at [Gemfury - Securely accessing your account](https://gemfury.com/help/git-push-package/#credentials).
+Add the following to your Gemfile:
 
-```
-git remote add fury https://rib-deploy@git.fury.io/billcap/eb_deployer.git
-git push fury master
-```
-
-## Adding to your environment
-
-In your Gemfile, add the following source directive before the reference to `gemspec`:
-
-```
-source "https://gem.fury.io/billcap/"
+``` ruby
+group :deployment do
+  gem 'rib-deploy', git: 'git@github.com:billcap/rib-deploy.git'
+  gem 'billcap_eb_deployer', git: 'git@github.com:billcap/eb_deployer.git'
+end
 ```
 
-(as documented in [Gemfury - Install RubyGems with a Gemfile (Bundler 1.7+)[https://gemfury.com/help/install-gems#gemfile] and [Keeping your privates private (Bundler 1.8+)[https://gemfury.com/help/install-gems#keep-your-privates-private-bundler-1-8])
-
-## Building on CircleCI
-
-Add the following as a build step in CircleCI:
-
-```
-bundle config gem.fury.io $GEMFURY_TOKEN
-```
-
-Also, add the GEMFURY_TOKEN environment variable in CircleCI, using the value specified as the _API token_ under the [Account settings for the Billcap account in Gemfury](https://manage.fury.io/manage/billcap/settings).
+When configuring the build in CircleCI, you'll need to configure a User key (under Settings -> Checkout SSH Keys) to gain access to both the repository being deployed, plus access to these dependencies in other repositories
 
 ## Installation
 
-    $ gem install eb_deployer
+Given that you've added the dependency to your Gemfile.
+
+``` bash
+bundle install
+```
 
 ## Usage
+
+Refer to [rib-deploy's README](https://github.com/billcap/rib-deploy/) for the rest of the Billcap specific access.
 
 ### Step One: AWS Account Setup
 
