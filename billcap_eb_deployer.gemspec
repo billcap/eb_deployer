@@ -10,7 +10,7 @@ Gem::Specification.new do |gem|
 
   gem.add_runtime_dependency 'aws-sdk-cloudformation', '~> 1.55', '>= 1.55.0'
   gem.add_runtime_dependency 'aws-sdk-elasticbeanstalk', '~> 1.44', '~> 1.44.0'
-  gem.add_runtime_dependency 'aws-sdk-s3', '~> 1', '~> 1.99.0'
+  gem.add_runtime_dependency 'aws-sdk-s3', '~> 1', '>= 1.208.0'
 
   gem.files         = `git ls-files`.split($\).reject {|f| f =~ /^samples\// }
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
